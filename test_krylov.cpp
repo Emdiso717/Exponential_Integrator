@@ -2,8 +2,10 @@
 #include <Eigen/Dense>
 #include <chrono>
 #include <cmath>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <random>
 #include <unsupported/Eigen/MatrixFunctions>
 
 using namespace Eigen;
@@ -16,13 +18,19 @@ void test_basic_expmv() {
   int n = 10000;
   double h = 0.1;
 
-  // 创建一个简单的测试矩阵
-  MatrixXd A = MatrixXd::Random(n, n);
+  std::mt19937 gen(42);
+  std::uniform_real_distribution<double> dist(-1.0, 1.0);
+  MatrixXd A = MatrixXd::NullaryExpr(
+      n, n, [&gen, &dist](Eigen::Index, Eigen::Index) { return dist(gen); });
   // A = (A + A.transpose()) / 2.0; // 对称化
   // A *= 0.1;                      // 缩放，使特征值较小
+  std::cout << "A(0,0) = " << A(0, 0) << std::endl;
 
-  VectorXd v = VectorXd::Random(n);
+  VectorXd v = VectorXd::NullaryExpr(
+      n, [&gen, &dist](Eigen::Index) { return dist(gen); });
   v.normalize();
+
+  std::cout << "v(0) = " << v(0) << std::endl;
 
   // phi_i 的精确计算（通过级数展开验证）
   // MatrixXd H = h * A;
