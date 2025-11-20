@@ -1,0 +1,5 @@
+set(BLA_VENDOR OpenBLAS)
+find_package(BLAS REQUIRED)
+if(BLAS_FOUND)
+  message("-- BLAS libs @ ${BLAS_LIBRARIES}")
+endif(BLAS_FOUND)

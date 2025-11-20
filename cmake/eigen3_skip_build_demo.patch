@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f3e69b845..7181f6530 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -535,7 +535,7 @@ endif()
+ 
+ add_subdirectory(unsupported)
+ 
+-add_subdirectory(demos EXCLUDE_FROM_ALL)
++# add_subdirectory(demos EXCLUDE_FROM_ALL)
+ 
+ # must be after test and unsupported, for configuring buildtests.in
+ add_subdirectory(scripts EXCLUDE_FROM_ALL)
