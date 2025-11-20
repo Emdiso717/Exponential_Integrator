@@ -39,8 +39,19 @@ void test_basic_expmv() {
   // VectorXd exact = phi_exact * v;
 
   // Krylov 方法
+  auto t_start = chrono::high_resolution_clock::now();
   krylov kry(v, h * A, n, 0); // phi_index = 0 for exp
+  auto t_end = chrono::high_resolution_clock::now();
+  auto duration1 = chrono::duration_cast<chrono::microseconds>(t_end - t_start);
+  cout << "Time taken (krylov construction): " << duration1.count() << " μs"
+       << endl;
+
+  auto t_start2 = chrono::high_resolution_clock::now();
   VectorXd krylov_result = kry.cal_phi_i(0);
+  auto t_end2 = chrono::high_resolution_clock::now();
+  auto duration2 =
+      chrono::duration_cast<chrono::microseconds>(t_end2 - t_start2);
+  cout << "Time taken (cal_phi_i): " << duration2.count() << " μs" << endl;
 
   // 计算误差
   // double error = (krylov_result - exact).norm();
